@@ -1,6 +1,10 @@
 from ase.build import fcc111
 from ase.constraints import FixAtoms
 from ase.io import write
+# Save restart + geometry
+calc.write("outputs/pt111_clean.gpw")
+write("outputs/pt111_clean.traj", slab)
+write("outputs/pt111_clean.xyz", slab)   # optional
 
 from gpaw import GPAW, PW, FermiDirac
 
