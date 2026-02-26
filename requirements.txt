@@ -1,0 +1,5 @@
+ase
+gpaw
+numpy
+scipy
+matplotlib
