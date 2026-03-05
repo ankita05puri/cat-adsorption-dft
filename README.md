@@ -1,4 +1,4 @@
-# Periodic DFT Surface Modeling
+# Periodic DFT Modeling of Surface Reactivity
 
 ## CO Adsorption and Reaction Setup on Pt(111)
 
