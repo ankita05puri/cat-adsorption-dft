@@ -1,5 +1,11 @@
 # Periodic DFT Modeling of Surface Reactivity
 
+## Pt(111) Surface Model
+
+<img width="1421" height="984" alt="pt111_surface_model" src="https://github.com/user-attachments/assets/17390f2e-e159-4771-b36d-1299ca2f01b5" />
+
+The catalytic surface is modeled using a periodic four-layer Pt(111) slab with a vacuum region (~15 Å). The bottom layers are fixed to represent the bulk lattice while the top layers relax during geometry optimization.
+
 ## CO Adsorption and Reaction Setup on Pt(111)
 
 This repository implements a reproducible periodic Density Functional Theory (DFT) workflow for studying adsorption and reaction configurations on catalytic metal surfaces.
@@ -138,4 +144,7 @@ Heterogeneous Catalysis | Atomistic Modeling | Physics-Informed ML
 📍 Portland, OR
 📧 ankit05puri@gmail.com
 🔗 https://linkedin.com/in/ankita-puri-phd
+
+
+
 
