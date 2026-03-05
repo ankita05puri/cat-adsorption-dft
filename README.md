@@ -69,6 +69,77 @@ For atomic oxygen adsorption: E_ads(O) = E(slab + O) − E(slab) − ½ E(O₂)
 ## Repository Structure
 
 ```bash
+# Periodic DFT Surface Modeling
+
+## CO Adsorption and Reaction Setup on Pt(111)
+
+This repository implements a reproducible periodic DFT workflow for studying adsorption and reaction configurations on catalytic metal surfaces.
+
+The system studied is CO oxidation on Pt(111), a classic heterogeneous catalysis model reaction. The workflow demonstrates how electronic structure calculations can be used to obtain adsorption energetics and prepare reaction geometries for further mechanistic modeling.
+
+Calculations are performed using ASE (Atomic Simulation Environment) and GPAW.
+
+## Modeling Workflow
+
+The repository follows a typical surface catalysis modeling pipeline:
+
+```bash
+Pt(111) Surface Construction
+        ↓
+Slab Relaxation
+        ↓
+Gas-Phase Reference Calculations
+        ↓
+Adsorption Geometry Optimization
+        ↓
+Adsorption Energy Analysis
+        ↓
+Co-Adsorption Configuration
+        ↓
+Reaction Pathway Setup (NEB)
+``` 
+
+This workflow forms the electronic-structure foundation for microkinetic modeling and catalytic performance analysis.
+
+## System Studied
+
+Surface: Pt(111)
+Reaction: CO Oxidation
+
+Elementary processes explored:
+	•	CO adsorption
+	•	O adsorption
+	•	CO + O co-adsorption
+	•	CO oxidation reaction pathway setup
+
+## Computational Details
+
+Density Functional Theory calculations were performed using:
+
+### DFT Method
+	•	Exchange–correlation functional: PBE
+	•	Basis: Plane-wave (PW400)
+	•	Brillouin zone sampling: 4 × 4 × 1 k-point mesh
+
+### Surface Model
+	•	Periodic Pt(111) slab
+	•	Four atomic layers
+	•	Bottom layers fixed to represent bulk lattice
+	•	Vacuum region (~15 Å) to avoid interactions between periodic images
+
+### Geometry Optimization
+	•	Optimizer: BFGS
+	•	Convergence criterion: fmax < 0.05 eV/Å
+
+## Adsorption Energy
+
+Adsorption energies are computed as: E_ads = E(slab + adsorbate) − E(slab) − E(gas)
+
+For atomic oxygen adsorption: E_ads(O) = E(slab + O) − E(slab) − ½ E(O₂)
+
+## Repository Structure
+
+```bash
 cat-adsorption-dft/
 │
 ├── inputs/
@@ -80,6 +151,23 @@ cat-adsorption-dft/
 │   06_extract_energies.py  # Compute adsorption energies
 │   07_co_o_coadsorb.py     # CO + O co-adsorption configuration
 │   08_neb_co_oxidation.py  # Reaction pathway setup (CO + O → CO₂)
+│   01_slab_relax.py        # Build and relax Pt(111) slab
+│   02_co_gas.py            # Gas-phase CO reference calculation
+│   03_co_on_top.py         # CO adsorption on top site
+│   04_o_on_hollow.py       # O adsorption on hollow sites (fcc / hcp)
+│   05_o2_gas.py            # Gas-phase O₂ reference calculation
+│   06_extract_energies.py  # Compute adsorption energies
+│   07_co_o_coadsorb.py     # CO + O co-adsorption configuration
+│   08_neb_co_oxidation.py  # Reaction pathway setup (CO + O → CO₂)
+│
+├── outputs/
+│   Optimized structures, trajectories, and GPAW output files
+│
+├── figures/
+│   Surface structures and visualization images
+│
+├── data/
+│   Extracted adsorption energies and analysis results
 │
 ├── outputs/
 │   Optimized structures, trajectories, and GPAW output files
@@ -139,3 +227,4 @@ Heterogeneous Catalysis | Atomistic Modeling | Physics-Informed ML
 📍 Portland, OR
 📧 ankit05puri@gmail.com
 🔗 https://linkedin.com/in/ankita-puri-phd
+
