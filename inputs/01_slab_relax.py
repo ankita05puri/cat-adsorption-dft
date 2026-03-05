@@ -1,4 +1,4 @@
-# inputs/01_slab_relax.py
+# 01_slab_relax.py
 
 import os
 import numpy as np
