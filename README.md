@@ -1,122 +1,141 @@
-CO Adsorption on Pt(111) using DFT (GPAW + ASE)
+# Periodic DFT Surface Modeling
 
-Overview
+## CO Adsorption and Reaction Setup on Pt(111)
 
-This project investigates CO adsorption on a Pt(111) surface using plane-wave DFT with GPAW and ASE.
+This repository implements a reproducible periodic DFT workflow for studying adsorption and reaction configurations on catalytic metal surfaces.
 
-We compute:
-	•	Clean slab energy
-	•	CO(g) energy
-	•	CO adsorbed on-top
-	•	CO adsorbed at bridge site
-	•	Adsorption energies for both geometries
+The system studied is CO oxidation on Pt(111), a classic heterogeneous catalysis model reaction. The workflow demonstrates how electronic structure calculations can be used to obtain adsorption energetics and prepare reaction geometries for further mechanistic modeling.
 
-The goal is to compare site preference and quantify binding strength.
+Calculations are performed using ASE (Atomic Simulation Environment) and GPAW.
 
-⸻
+## Modeling Workflow
 
-Scientific Question
+The repository follows a typical surface catalysis modeling pipeline:
 
-Which site binds CO more strongly on Pt(111)?
+```bash
+Pt(111) Surface Construction
+        ↓
+Slab Relaxation
+        ↓
+Gas-Phase Reference Calculations
+        ↓
+Adsorption Geometry Optimization
+        ↓
+Adsorption Energy Analysis
+        ↓
+Co-Adsorption Configuration
+        ↓
+Reaction Pathway Setup (NEB)
+``` 
 
-We compare:
+This workflow forms the electronic-structure foundation for microkinetic modeling and catalytic performance analysis.
 
-E_{ads} = E_{slab+CO} - E_{slab} - E_{CO(g)}
+## System Studied
 
-More negative adsorption energy → stronger binding.
+Surface: Pt(111)
+Reaction: CO Oxidation
 
-⸻
+Elementary processes explored:
+	•	CO adsorption
+	•	O adsorption
+	•	CO + O co-adsorption
+	•	CO oxidation reaction pathway setup
 
-Computational Details
-	•	Code: GPAW (plane-wave mode)
-	•	XC functional: PBE
-	•	Cutoff: 400 eV
-	•	k-points: (4, 4, 1)
-	•	Fermi smearing: 0.1 eV
-	•	Slab: Pt(111), 3 layers
-	•	Bottom two layers fixed during relaxation
-	•	Geometry optimization: BFGS, fmax = 0.05 eV/Å
+## Computational Details
 
-  
-⸻
+Density Functional Theory calculations were performed using:
 
-Results
+### DFT Method
+	•	Exchange–correlation functional: PBE
+	•	Basis: Plane-wave (PW400)
+	•	Brillouin zone sampling: 4 × 4 × 1 k-point mesh
 
-Configuration  Total Energy (eV)  Adsorption Energy (eV)
-Clean slab  -98.367235  —
-CO(g)  -13.192740  —
-CO on-top  -112.591177  -1.031202
-CO bridge  -112.712397  -1.152422
+### Surface Model
+	•	Periodic Pt(111) slab
+	•	Four atomic layers
+	•	Bottom layers fixed to represent bulk lattice
+	•	Vacuum region (~15 Å) to avoid interactions between periodic images
 
-⸻
+### Geometry Optimization
+	•	Optimizer: BFGS
+	•	Convergence criterion: fmax < 0.05 eV/Å
 
-Conclusion
+## Adsorption Energy
 
-Bridge site binds CO more strongly than on-top site.
+Adsorption energies are computed as: E_ads = E(slab + adsorbate) − E(slab) − E(gas)
 
-E_{ads}^{bridge} < E_{ads}^{top}
+For atomic oxygen adsorption: E_ads(O) = E(slab + O) − E(slab) − ½ E(O₂)
 
-This aligns with expected stronger multi-center metal–adsorbate interaction at bridge coordination.
+## Repository Structure
 
-⸻
-
-Project Structure
-
+```bash
 cat-adsorption-dft/
 │
 ├── inputs/
-│   ├── 01_clean_slab.py
-│   ├── 03_co_gas.py
-│   ├── 04_co_on_top.py
-│   ├── 07_co_on_bridge.py
-│   ├── 08_compare_sites.py
+│   01_slab_relax.py        # Build and relax Pt(111) slab
+│   02_co_gas.py            # Gas-phase CO reference calculation
+│   03_co_on_top.py         # CO adsorption on top site
+│   04_o_on_hollow.py       # O adsorption on hollow sites (fcc / hcp)
+│   05_o2_gas.py            # Gas-phase O₂ reference calculation
+│   06_extract_energies.py  # Compute adsorption energies
+│   07_co_o_coadsorb.py     # CO + O co-adsorption configuration
+│   08_neb_co_oxidation.py  # Reaction pathway setup (CO + O → CO₂)
 │
-├── outputs/           # (large .gpw files excluded via .gitignore)
-├── energies_summary.txt
-├── requirements.txt
+├── outputs/
+│   Optimized structures, trajectories, and GPAW output files
+│
+├── figures/
+│   Surface structures and visualization images
+│
+├── data/
+│   Extracted adsorption energies and analysis results
+│
 └── README.md
+```  
 
+## Running the Workflow
 
-⸻
+Run calculations sequentially.
 
-How to Run
+Surface and adsorption calculations:
+```bash
+python inputs/01_slab_relax.py
+python inputs/02_co_gas.py
+python inputs/03_co_on_top.py
+python inputs/04_o_on_hollow.py
+python inputs/05_o2_gas.py
+python inputs/06_extract_energies.py
+```
 
-Create conda environment:
+Advanced configurations:
+```bash
+python inputs/07_co_o_coadsorb.py
+python inputs/08_neb_co_oxidation.py
+```
 
-conda create -n gpaw-x64 python=3.10
-conda activate gpaw-x64
+## Purpose of the Project
 
-Run in order:
+This repository demonstrates how periodic DFT calculations can be used to quantify surface adsorption energetics and construct reaction configurations for catalytic systems.
 
-python inputs/01_clean_slab.py
-python inputs/03_co_gas.py
-python inputs/04_co_on_top.py
-python inputs/07_co_on_bridge.py
-python inputs/08_compare_sites.py
+The results generated here serve as inputs for microkinetic modeling of catalytic performance, forming the first stage of a multiscale modeling pipeline.
 
+## Tools Used
 
-⸻
+Electronic Structure
+	•	GPAW
+	•	ASE
 
-Skills Demonstrated
-	•	Surface slab construction
-	•	Adsorbate placement (on-top and bridge)
-	•	Geometry relaxation with constraints
-	•	Extraction of DFT energies from output
-	•	Adsorption energy comparison
-	•	Debugging GPAW symmetry and geometry issues
-	•	Reproducible workflow design
+Scientific Programming
+	•	Python
+	•	NumPy
+	•	Matplotlib
 
-⸻
+# Author
 
-Next Extensions
-	•	Add hollow site comparison
-	•	Perform full relaxation for all sites
-	•	Compute vibrational frequencies
-	•	Add coverage dependence
-	•	Build ML model to predict adsorption energies
+## Ankita Puri
+Computational Materials Scientist
+Heterogeneous Catalysis | Atomistic Modeling | Physics-Informed ML
 
-⸻
-
-This project represents a complete, reproducible DFT adsorption workflow suitable for heterogeneous catalysis research.
-conda install -c conda-forge gpaw ase numpy
-
+📍 Portland, OR
+📧 ankit05puri@gmail.com
+🔗 https://linkedin.com/in/ankita-puri-phd
