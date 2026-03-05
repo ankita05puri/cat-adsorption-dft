@@ -1,4 +1,5 @@
-# inputs/06_extract_energies.py
+# 06_extract_energies.py
+
 from __future__ import annotations
 
 from pathlib import Path
