@@ -1,3 +1,6 @@
-outputs/*.gpw
-outputs/*.traj
-outputs/*.txt
+.DS_Store
+outputs/
+*.gpw
+*.traj
+*.log
+*.txt
