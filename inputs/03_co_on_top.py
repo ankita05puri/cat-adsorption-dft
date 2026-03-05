@@ -1,17 +1,4 @@
-"""
-03_co_on_top.py
-Pillar 3A: CO adsorption geometry on Pt(111) on-top site (relax)
-
-Inputs:
-  outputs/pt111_relaxed.xyz   (from slab relaxation)
-
-Outputs:
-  outputs/co_top.txt          (GPAW SCF log)
-  outputs/co_top_opt.log      (BFGS log)
-  outputs/co_top.traj         (trajectory)
-  outputs/co_top_relaxed.xyz  (final geometry)
-  outputs/co_top_relaxed.gpw  (restart)
-"""
+# 03_co_on_top.py
 
 from pathlib import Path
 import numpy as np
@@ -112,7 +99,7 @@ def main():
     slab.calc.write(str(OUT / "co_top_relaxed.gpw"))
     write(OUT / "co_top_relaxed.xyz", slab)
 
-    # quick sanity: C height above top Pt layer
+    # C height above top Pt layer
     z_pt_top = max(slab.positions[i, 2] for i in pt_idx)
     c_idx = [i for i, a in enumerate(slab) if a.symbol == "C"][-1]
     print("[sanity] C height above top Pt (Å):", slab.positions[c_idx, 2] - z_pt_top)
