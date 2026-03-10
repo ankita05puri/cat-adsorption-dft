@@ -9,27 +9,29 @@ from gpaw import GPAW, PW, FermiDirac
 def main():
     os.makedirs("outputs", exist_ok=True)
 
-    # Initial CO (close to experimental)
+    # Initial CO 
     co = Atoms(
         "CO",
         positions=[(0.0, 0.0, 0.0),
                    (0.0, 0.0, 1.13)],
         cell=(15.0, 15.0, 15.0),
-        pbc=(False, False, False),
+        pbc=False,
     )
+
+    co.center(vacuum=6.0)      
+    co.positions += 1e-3      
 
     calc = GPAW(
         mode=PW(400),
         xc="PBE",
-        kpts={"size": (1, 1, 1), "gamma": True},
+        kpts=(1, 1, 1),                 
         occupations=FermiDirac(0.01),
         symmetry={"point_group": False, "time_reversal": False},
         txt="outputs/co_gas.txt",
     )
-
     co.calc = calc
 
-    # relaxation
+    # Relaxation
     opt = BFGS(co, trajectory="outputs/co_gas.traj", logfile="outputs/co_gas_opt.log")
     opt.run(fmax=0.01, steps=50)
 

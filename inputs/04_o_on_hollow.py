@@ -93,9 +93,6 @@ def place_O_on_site(slab, site, height=1.2):
     # get a hollow center in the cell
     x, y = hollow_xy(slab, top_idx)
 
-    # if user asked for fcc/hcp, adjust by picking the hollow type that matches
-    # We'll try a few candidate hollows by shifting by surface lattice vectors
-    # and choose one with the desired classification.
     a1 = slab.cell[0, :2]
     a2 = slab.cell[1, :2]
 

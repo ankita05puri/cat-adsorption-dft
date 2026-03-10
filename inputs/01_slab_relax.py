@@ -63,7 +63,6 @@ def main():
     optlog_path = "outputs/pt111_relaxed_opt.log"
     gpawtxt_path = "outputs/pt111_relaxed.txt"
 
-    # Restart from final relaxed structure if exists
     if os.path.exists(traj_path) and os.path.getsize(traj_path) > 0:
         slab = read(traj_path)
         print("[restart] Loaded existing relaxed slab:", traj_path)
