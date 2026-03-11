@@ -2,7 +2,7 @@
 
 ## Pt(111) Surface Model
 
-<img width="1421" height="984" alt="pt111_surface_model" src="https://github.com/user-attachments/assets/17390f2e-e159-4771-b36d-1299ca2f01b5" />
+<img width="600" height="984" alt="pt111_surface_model" src="https://github.com/user-attachments/assets/17390f2e-e159-4771-b36d-1299ca2f01b5" />
 
 The catalytic surface is modeled using a periodic four-layer Pt(111) slab with a vacuum region (~15 Å). The bottom layers are fixed to represent the bulk lattice while the top layers relax during geometry optimization.
 
@@ -72,32 +72,6 @@ Adsorption energies are computed as: E_ads = E(slab + adsorbate) − E(slab) −
 
 For atomic oxygen adsorption: E_ads(O) = E(slab + O) − E(slab) − ½ E(O₂)
 
-## Repository Structure
-
-```bash
-cat-adsorption-dft/
-│
-├── inputs/
-│   01_slab_relax.py        # Build and relax Pt(111) slab
-│   02_co_gas.py            # Gas-phase CO reference
-│   03_co_on_top.py         # CO adsorption on top site
-│   04_o_on_hollow.py       # O adsorption on hollow sites
-│   05_o2_gas.py            # Gas-phase O2 reference
-│   06_extract_energies.py  # Adsorption energy calculation
-│   07_co_o_coadsorb.py     # CO + O co-adsorption configuration
-│   08_neb_co_oxidation.py  # Reaction pathway setup (NEB)
-│
-├── outputs/
-│   Optimized structures and calculation outputs
-│
-├── figures/
-│   Surface structures and visualization images
-│
-├── data/
-│   Extracted adsorption energies and analysis results
-│
-└── README.md
-```
 ## Running the Workflow
 
 Run calculations sequentially.
